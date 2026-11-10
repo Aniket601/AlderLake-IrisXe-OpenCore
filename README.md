@@ -51,9 +51,10 @@ Unified **OpenCore 1.0.8** dual-macOS + Windows 11 EFI configuration for the **L
 - **Audio (`ALC257`, `alcid=100` + `SimpleHDA.kext` on Tahoe):**
   - Works out of the box for internal speakers, mic, and 3.5mm jack (`alcid=100`, `alcdelay=1000`, `shda-lang=en`).
   - *Note:* With `alcid=100` (which separates Speaker and Headphone path groups), macOS Tahoe can sometimes default initial output to **Built-in Headphone**. Simply switch output to **Built-in Speaker** in Control Center / Sound Settings (or test `alcid=99` if you prefer a single combined output device).
-- **Tahoe Wi-Fi Stability (`AirportRTW-Tahoe.kext`):**
+- **Tahoe Wi-Fi Stability & iMessage / APNS (`AirportRTW-Tahoe.kext`):**
   - `RTWAwdlEnabled` is set to `false` in `AirportRTW-Tahoe.kext/Contents/Info.plist` to avoid AWDL firmware/boot stalls (`awdl0`).
   - `csr-active-config` uses `030a0000` (`AwoAAA==`) without `CSR_ALLOW_APPLE_INTERNAL` (`0x10`) and without `debug=0x100`, preventing `IO80211_io80211isDebuggable()` `vlogDebug` NULL-pointer kernel panics.
+  - **iMessage & Apple Push Service (APNS) LinkQuality Fix:** On modern macOS (Sonoma / Tahoe), `apsd` (Apple Push Service Daemon) pauses push connections if `State:/Network/Interface/en0/LinkQuality` is `-2` ("network power expensive to use"). A simple LaunchDaemon keeps `LinkQuality` at `100` so iMessage, FaceTime, and push notifications connect and deliver reliably out of the box without requiring an iPhone.
 - **Photo Booth / VideoToolbox GVA Pixel Transfer Crash (`AppleIntelTGLGraphicsVADriver`):**
   - Big Sur `AppleIntelTGLGraphicsVADriver.bundle` (`16.0.32`) can `SIGSEGV` inside `AVFPixelProcess_PrepareToTransferImages` when `VideoToolbox` selects hardware GVA pixel transfer (`VTGVAPixelTransfer`) with `-disablegfxfirmware`.
   - Apply system-wide `VideoToolbox` Metal fallback in macOS:
