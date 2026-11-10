@@ -16,6 +16,10 @@
 
 Unified **OpenCore 1.0.8** dual-macOS + Windows 11 EFI configuration for the **Lenovo IdeaPad 3 15IAU7 (Type 82RK, Intel 12th Gen Alder Lake-U)** supporting **macOS Tahoe 26.7.1 (`25G241` / Darwin `25.6.0`)** and **macOS Ventura 13.7.8 (`22H730` / Darwin `22.6.0`)** from a single shared EFI via `MinKernel`/`MaxKernel` gating.
 
+> [!TIP]
+> **Using a different laptop brand or 12th/13th Gen Intel model?**  
+> Check out our universal framework: [**Universal-AlderLake-IrisXe**](https://github.com/Aniket601/Universal-AlderLake-IrisXe) — an interactive CLI configurator and EFI framework supporting **Dell, HP, Lenovo, and Asus** laptops with full Intel Iris Xe Metal acceleration!
+
 ---
 
 ## Verified Hardware Specifications
