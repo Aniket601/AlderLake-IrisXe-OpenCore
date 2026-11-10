@@ -3,6 +3,8 @@
 [![Author](https://img.shields.io/badge/Author-Aniket%20Jadhav-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/meaniikett/)
 [![GitHub](https://img.shields.io/badge/GitHub-Aniket601-181717?logo=github&logoColor=white)](https://github.com/Aniket601)
 [![VoodooI2C Contributor](https://img.shields.io/badge/VoodooI2C-Contributor%20(PR%20%23588)-purple?logo=github)](https://github.com/VoodooI2C/VoodooI2C/pull/588)
+[![WhateverXe Validated](https://img.shields.io/badge/WhateverXe-Validated%20(Issue%20%2364)-blue?logo=github)](https://github.com/b00t0x/WhateverXe/issues/64)
+[![Post-Install Suite](https://img.shields.io/badge/Post--Install-Stability%20Suite%20v1.1-success?logo=gnubash)](scripts/post-install.sh)
 ![macOS Tahoe](https://img.shields.io/badge/macOS-Tahoe%2026.7.1-blue?logo=apple)
 ![macOS Ventura](https://img.shields.io/badge/macOS-Ventura%2013.7.8-informational?logo=apple)
 ![OpenCore](https://img.shields.io/badge/OpenCore-1.0.8-black)
@@ -161,6 +163,25 @@ For privacy and Apple Services (iMessage / FaceTime / iCloud), serial numbers in
 2. Copy `EFI/BOOT/BOOTx64.efi` and `EFI/OC/` to the EFI partition without modifying `EFI/Microsoft/`.
 3. Once your install is stable, you may optionally remove `-v` from `boot-args` and set `Misc -> Debug -> Target = 0` (`AppleDebug = False`) for silent production boots.
 
+### 5. Automated Post-Install & Stability Suite (`scripts/post-install.sh`)
+To eliminate manual setup and protect your installation against silent breakage, run the included post-install stability CLI script:
+
+```bash
+# One-liner via curl:
+curl -fsSL https://raw.githubusercontent.com/Aniket601/AlderLake-IrisXe-OpenCore/main/scripts/post-install.sh | sudo bash
+
+# Or run locally from this repository:
+sudo ./scripts/post-install.sh
+```
+
+#### What `post-install.sh` Automates:
+1. **APNS & iMessage / FaceTime Fix:** Creates a persistent LaunchDaemon (`/Library/LaunchDaemons/com.hackintosh.fix-linkquality.plist`) running a background watchdog that locks `LinkQuality = 100` on `en0`. Prevents `apsd` from dropping Apple Push Service connections.
+2. **Power Management & Freeze Prevention:** Enforces `pmset -a disablesleep 1 autopoweroff 0 hibernatemode 0`. Displays turn off instantly when closing the lid without triggering S0ix / S3 kernel panics.
+3. **Silent OS Update Protection:** Disables unattended background macOS point-release updates to protect `/Library/Extensions/` graphics acceleration kexts from being silently overwritten.
+4. **VideoToolbox Metal Fallback:** Configures CoreMedia defaults to prevent `SIGSEGV` crashes in Photo Booth, FaceTime, and video players.
+5. **FAT32 ESP Spotlight Suppression:** Drops `.metadata_never_index` on EFI and recovery partitions to eliminate Spotlight I/O stutter.
+6. **Live Telemetry & Diagnostics:** Verifies Intel Iris Xe Metal 2 acceleration, reports battery health, cycle count, temperature, and APNS status.
+
 ---
 
 ## Author & Maintainer
@@ -169,7 +190,9 @@ For privacy and Apple Services (iMessage / FaceTime / iCloud), serial numbers in
 - **LinkedIn:** [linkedin.com/in/meaniikett](https://www.linkedin.com/in/meaniikett/)
 - **GitHub:** [@Aniket601](https://github.com/Aniket601)
 - **Role:** Security & Systems Engineer | Low-Level Kernel / OS & Threat Research
-- **Upstream Contributions:** [VoodooI2C/VoodooI2C #588](https://github.com/VoodooI2C/VoodooI2C/pull/588) (documented `-vi2c-force-polling` & `force-polling`)
+- **Upstream Contributions:**
+  - [VoodooI2C/VoodooI2C #588](https://github.com/VoodooI2C/VoodooI2C/pull/588) (documented `-vi2c-force-polling` & `force-polling`)
+  - [b00t0x/WhateverXe #64](https://github.com/b00t0x/WhateverXe/issues/64) (Alder Lake Iris Xe validation & resolution)
 
 ---
 
@@ -178,7 +201,7 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 ## Credits & Acknowledgements
 - [Acidanthera](https://github.com/acidanthera) for OpenCorePkg, Lilu, AppleALC, VirtualSMC, BrcmPatchRAM (`BlueToolFixup`), BrightnessKeys, and VoodooPS2.
-- [b00t0x](https://github.com/b00t0x) for `WhateverXe` and `CpuTopologyRebuild`.
+- [b00t0x](https://github.com/b00t0x) for `WhateverXe` and `CpuTopologyRebuild` — special thanks for validating the Alder Lake Iris Xe solution in [Issue #64](https://github.com/b00t0x/WhateverXe/issues/64).
 - [nickk19](https://github.com/nickk19) for Alder Lake eDP research and PR #43.
 - [williambj1](https://github.com/williambj1/AirportRTW) / `senmiko` for `AirportRTW` Realtek RTL8852BE Wi-Fi 6 support.
 - [laobamac](https://github.com/laobamac) for `SimpleHDA` on macOS Tahoe.
