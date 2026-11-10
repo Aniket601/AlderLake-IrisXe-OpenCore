@@ -65,9 +65,14 @@ Unified **OpenCore 1.0.8** dual-macOS + Windows 11 EFI configuration for the **L
 - **Trackpad & Upstream VoodooI2C Contribution (`ELAN06FA` on Alder Lake PCH):**
   - The ELAN06FA I2C Precision Touchpad connected via Intel LPSS I2C (`pci8086,51e9`) requires force-polling mode under macOS because GPIO interrupts do not fire natively on 12th Gen Alder Lake PCH.
   - Documented and contributed upstream to [VoodooI2C/VoodooI2C (PR #588)](https://github.com/VoodooI2C/VoodooI2C/pull/588) by Aniket Jadhav ([@Aniket601](https://github.com/Aniket601)) to officially document the `-vi2c-force-polling` boot argument and `force-polling` device property.
-- **Sleep / Wake Note (Modern Standby BIOS):**
-  - Lenovo IdeaPad 3 15IAU7 only exposes S0ix Modern Standby / S4 / S5 in BIOS (no ACPI S3), so macOS deep idle / `powernap` / `standby` can freeze or panic `WindowServer`/`IntelAccelerator`.
-  - Disable sleep/standby in macOS (`pmset -a sleep 0 displaysleep 0 disksleep 0 hibernatemode 0 standby 0 powernap 0 proximitywake 0 tcpkeepalive 0 womp 0 halfdim 0`) and set Screen Saver idle time to Never (`0`). (`HibernateMode = None` in `config.plist`.)
+- **Sleep / Wake & Lid Close Fix (Modern Standby BIOS):**
+  - Lenovo IdeaPad 3 15IAU7 only exposes S0ix Modern Standby / S4 / S5 in BIOS (no legacy ACPI S3), so macOS deep idle / lid-close sleep attempts can freeze or panic `WindowServer`/`IntelAccelerator` (`shutdown_stall`).
+  - Disable sleep globally in macOS power management so closing the lid turns off the display cleanly without freezing or restarting:
+    ```bash
+    sudo pmset -a disablesleep 1
+    sudo pmset -a sleep 0 displaysleep 0 disksleep 0 hibernatemode 0 standby 0 powernap 0 proximitywake 0 tcpkeepalive 0 womp 0 halfdim 0
+    ```
+    (`HibernateMode = None` in `config.plist`).
 
 ---
 
