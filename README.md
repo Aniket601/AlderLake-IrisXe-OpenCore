@@ -2,6 +2,8 @@
 
 [![Author](https://img.shields.io/badge/Author-Aniket%20Jadhav-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/meaniikett/)
 [![GitHub](https://img.shields.io/badge/GitHub-Aniket601-181717?logo=github&logoColor=white)](https://github.com/Aniket601)
+[![Latest Release](https://img.shields.io/github/v/release/Aniket601/AlderLake-IrisXe-OpenCore?logo=github&style=flat-square&color=0A66C2)](https://github.com/Aniket601/AlderLake-IrisXe-OpenCore/releases)
+[![Views](https://hits.sh/github.com/Aniket601/AlderLake-IrisXe-OpenCore.svg?view=today-total&style=flat-square&label=views&color=007ec6)](https://hits.sh/github.com/Aniket601/AlderLake-IrisXe-OpenCore/)
 [![VoodooI2C Contributor](https://img.shields.io/badge/VoodooI2C-Contributor%20(PR%20%23588)-purple?logo=github)](https://github.com/VoodooI2C/VoodooI2C/pull/588)
 [![WhateverXe Validated](https://img.shields.io/badge/WhateverXe-Validated%20(Issue%20%2364)-blue?logo=github)](https://github.com/b00t0x/WhateverXe/issues/64)
 [![Post-Install Suite](https://img.shields.io/badge/Post--Install-Stability%20Suite%20v1.1-success?logo=gnubash)](scripts/post-install.sh)
@@ -61,6 +63,10 @@ Unified **OpenCore 1.0.8** dual-macOS + Windows 11 EFI configuration for the **L
   - `RTWAwdlEnabled` is set to `false` in `AirportRTW-Tahoe.kext/Contents/Info.plist` to avoid AWDL firmware/boot stalls (`awdl0`).
   - `csr-active-config` uses `030a0000` (`AwoAAA==`) without `CSR_ALLOW_APPLE_INTERNAL` (`0x10`) and without `debug=0x100`, preventing `IO80211_io80211isDebuggable()` `vlogDebug` NULL-pointer kernel panics.
   - **iMessage & Apple Push Service (APNS) LinkQuality Fix:** On modern macOS (Sonoma / Tahoe), `apsd` (Apple Push Service Daemon) pauses push connections if `State:/Network/Interface/en0/LinkQuality` is `-2` ("network power expensive to use"). A simple LaunchDaemon keeps `LinkQuality` at `100` so iMessage, FaceTime, and push notifications connect and deliver reliably out of the box without requiring an iPhone.
+- **OpenCanopy Graphical Boot Picker (GoldenGate GUI):**
+  - Upgraded from legacy text mode to **OpenCanopy External GUI** with high-resolution **Acidanthera GoldenGate** icons for macOS and Windows.
+  - Full mouse and trackpad pointer navigation supported.
+  - `HideAuxiliary: True` enabled for a clean Apple aesthetic — press `Spacebar` anytime to reveal Reset NVRAM and recovery tools.
 - **Photo Booth / VideoToolbox GVA Pixel Transfer Crash (`AppleIntelTGLGraphicsVADriver`):**
   - Big Sur `AppleIntelTGLGraphicsVADriver.bundle` (`16.0.32`) can `SIGSEGV` inside `AVFPixelProcess_PrepareToTransferImages` when `VideoToolbox` selects hardware GVA pixel transfer (`VTGVAPixelTransfer`) with `-disablegfxfirmware`.
   - Apply system-wide `VideoToolbox` Metal fallback in macOS:

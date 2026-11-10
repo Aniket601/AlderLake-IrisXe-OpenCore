@@ -1,0 +1,63 @@
+name: "Create Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: macos-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Package Release Bundle"
+        run: |
+          mkdir -p dist
+          # Package ready-to-use EFI and scripts
+          zip -r "dist/Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip" EFI/ scripts/ README.md LICENSE
+          cd dist
+          shasum -a 256 "Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip" > sha256_checksums.txt
+          cat sha256_checksums.txt
+
+      - name: "Publish GitHub Release"
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Lenovo IdeaPad 3 15IAU7 OpenCore ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          body: |
+            ## 🚀 Lenovo IdeaPad 3 15IAU7 OpenCore ${{ github.ref_name }}
+
+            Production-grade, verified **OpenCore 1.0.8** dual-boot EFI for the **Lenovo IdeaPad 3 15IAU7** (Intel Core i5-1235U Alder Lake) supporting **macOS Tahoe 26.7.1** and **macOS Ventura 13.7.8** with full **Intel Iris Xe Graphics (`0x46A8`) Metal 2** hardware acceleration.
+
+            ---
+
+            ### ✨ Highlights in this Release
+            * **🍏 Full Metal 2 Graphics Acceleration:** Smooth UI, native window animations, 1080p 60fps video decoding via `WhateverXe.kext` (v0.7.0) with eDP display preservation (`-wex-edp-keep`).
+            * **🎨 Sleek OpenCanopy Graphical Boot Picker:** Preloaded **GoldenGate** Apple & Windows high-res icons, full trackpad pointer navigation, and clean boot screen (`HideAuxiliary: True` — press **Spacebar** to show tools & Reset NVRAM).
+            * **🖱️ Precision Touchpad:** Full multi-touch macOS gestures & click via `VoodooI2C` with upstream `-vi2c-force-polling` (PR #588).
+            * **📶 Wi-Fi 6 & Bluetooth:** Realtek RTL8852BE wireless + bluetooth fully functional on both Tahoe and Ventura.
+            * **🔋 Battery & Power:** Celxpert `L20C3PF0` ACPI battery management via custom `SSDT-BAT0.aml`.
+            * **🛡️ Post-Install Stability Suite:** Bundled `scripts/post-install.sh` for SCDynamicStore network watchdog and sleep optimization.
+
+            ---
+
+            ### 📦 Download Assets
+            * `Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip`: Ready-to-copy EFI directory and post-install stability scripts.
+            * `sha256_checksums.txt`: Verification SHA-256 hash.
+
+            ---
+
+            ### 🛠️ Quick Setup
+            1. Download `Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip` below and unzip it.
+            2. Generate your SMBIOS using [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) with model `MacBookPro16,2`.
+            3. Copy the `EFI` folder to your USB EFI partition and boot!
+          files: |
+            dist/Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip
+            dist/sha256_checksums.txt
