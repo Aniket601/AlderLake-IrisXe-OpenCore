@@ -61,3 +61,4 @@ jobs:
           files: |
             dist/Lenovo-IdeaPad-3-15IAU7-OpenCore-${{ github.ref_name }}-EFI.zip
             dist/sha256_checksums.txt
+
