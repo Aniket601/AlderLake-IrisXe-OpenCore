@@ -322,6 +322,10 @@
 				<data>
 				AADAAw==
 				</data>
+				<key>framebuffer-unifiedmem</key>
+				<data>
+				AAAAgA==
+				</data>
 				<key>hda-gfx</key>
 				<string>onboard-1</string>
 				<key>model</key>
@@ -527,7 +531,7 @@
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/CpuTopologyRebuild</string>
 				<key>MaxKernel</key>
-				<string>23.99.99</string>
+				<string></string>
 				<key>MinKernel</key>
 				<string>20.0.0</string>
 				<key>PlistPath</key>
@@ -942,7 +946,7 @@
 			<key>ProvideCurrentCpuInfo</key>
 			<true/>
 			<key>SetApfsTrimTimeout</key>
-			<integer>0</integer>
+			<integer>999</integer>
 			<key>ThirdPartyDrives</key>
 			<false/>
 			<key>XhciPortLimit</key>
@@ -1153,7 +1157,7 @@
 				AAAAAAAAAAAAAAAAAAA=
 				</data>
 				<key>boot-args</key>
-				<string>-v keepsyms=1 panic=5 TSC_sync_margin=0 -no_compat_check -allow3d -disablegfxfirmware -igfxdvmt -wex-edp-keep revpatch=auto -ctrsmt -nvmefaspm alcid=100 -vi2c-force-polling alcdelay=1000 shda-lang=en -btlfxboardid amfi_get_out_of_my_way=1</string>
+				<string>-v keepsyms=1 panic=5 TSC_sync_margin=0 -no_compat_check -allow3d -disablegfxfirmware -igfxdvmt -wex-edp-keep revpatch=auto -ctrsmt alcid=100 -vi2c-force-polling alcdelay=1000 shda-lang=en -btlfxboardid amfi_get_out_of_my_way=1</string>
 				<key>csr-active-config</key>
 				<data>
 				AwoAAA==
