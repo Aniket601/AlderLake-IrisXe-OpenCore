@@ -314,6 +314,10 @@
 				<data>
 				AA==
 				</data>
+				<key>disable-agpm</key>
+				<data>
+				AQAAAA==
+				</data>
 				<key>framebuffer-patch-enable</key>
 				<data>
 				AQAAAA==
@@ -1157,7 +1161,7 @@
 				AAAAAAAAAAAAAAAAAAA=
 				</data>
 				<key>boot-args</key>
-				<string>-v keepsyms=1 panic=5 TSC_sync_margin=0 -no_compat_check -allow3d -disablegfxfirmware -igfxdvmt -wex-edp-keep revpatch=auto -ctrsmt alcid=99 -vi2c-force-polling shda-lang=en -btlfxboardid amfi_get_out_of_my_way=1</string>
+				<string>-v keepsyms=1 panic=5 -no_compat_check -allow3d -disablegfxfirmware -igfxdvmt -wex-edp-keep revpatch=auto -ctrsmt alcid=99 -vi2c-force-polling shda-lang=en -btlfxboardid amfi_get_out_of_my_way=1</string>
 				<key>csr-active-config</key>
 				<data>
 				AwoAAA==
